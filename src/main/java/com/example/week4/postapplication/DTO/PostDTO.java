@@ -10,6 +10,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.cglib.core.Local;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 @Getter
@@ -27,6 +31,4 @@ public class PostDTO {
     @NotBlank
     private String description;
 
-    @JsonFormat(pattern = "dd-MMM-yyyy HH:mm:ss")
-    private LocalDateTime createdTime;
 }
