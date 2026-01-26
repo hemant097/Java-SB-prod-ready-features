@@ -16,8 +16,7 @@ import java.time.LocalDateTime;
 
 @Entity @Getter @Setter @NoArgsConstructor  @AllArgsConstructor
 @Table(name = "posts")
-@EntityListeners(AuditingEntityListener.class)
-public class Post {
+public class Post extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,16 +24,15 @@ public class Post {
     private String title;
     private String description;
 
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdDateTime;
+    //Lifecycle hooks for database, can be useful in some cases, like creating our own auditing
+    @PrePersist
+    void beforeSave(){}
 
-    @LastModifiedDate
-    private LocalDateTime updatedDateTime;
+    @PreUpdate
+    void beforeUpdate(){}
 
-    @CreatedBy
-    private String createdBy;
+    @PreRemove
+    void beforeDelete(){}
 
-    @LastModifiedBy
-    private String updatedBy;
+
 }
