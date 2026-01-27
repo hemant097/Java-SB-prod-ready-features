@@ -61,6 +61,5 @@ public class PostServiceImpl implements PostService {
 
         return modelMapper.map(updatedPost, PostDTO.class);
 
-
     }
 }
