@@ -19,6 +19,7 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<List<PostDTO>> getAllPosts(){
+        System.out.println("in get method of post controller");
         return new ResponseEntity<>(postService.getAllPosts(), HttpStatus.OK);
     }
 
@@ -29,6 +30,7 @@ public class PostController {
 
     @GetMapping(path = "/{postid}")
     public ResponseEntity<PostDTO> findPostById(@PathVariable(name = "postid") Long postId){
+        System.out.println("in secpn get method");
         return new ResponseEntity<>(postService.findPostById(postId),HttpStatus.OK);
     }
 
