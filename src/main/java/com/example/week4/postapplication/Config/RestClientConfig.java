@@ -19,6 +19,8 @@ public class RestClientConfig {
     @Value("${employeeService.base.url}")
     private String BASE_URL;
 
+
+
     @Bean
     @Qualifier("getEmployeeServiceRestClient")
     RestClient getEmployeeServiceRestClient(){

@@ -62,6 +62,13 @@ public class EmployeeClientImpl implements EmployeeClient {
                     .get()
                     .uri("/{empId}",empId)
                     .retrieve()
+                    .onStatus(HttpStatusCode::is4xxClientError, (req,res)->{
+
+                        log.debug("4XXClientError occurred during getEmployeeById");
+                        log.error(new String(res.getBody().readAllBytes()));
+
+                        throw new ResourceNotFound("could not find employee with id "+empId);
+                    })
                     .toEntity(new ParameterizedTypeReference<>() {
                     });
 
@@ -77,6 +84,7 @@ public class EmployeeClientImpl implements EmployeeClient {
 
     @Override
     public EmployeeDTO createNewEmployee(EmployeeDTO employeeDTO) {
+        log.trace("trying to create employee in createNewEmployee :{}",employeeDTO);
         try {
           APIResponse<EmployeeDTO> employeeDTOAPIResponse = restClient
                     .post()
@@ -84,21 +92,27 @@ public class EmployeeClientImpl implements EmployeeClient {
                     .retrieve()
                   .onStatus(HttpStatusCode::is4xxClientError, (req,res)->{
 
-                      throw new ResourceNotFound(new String(res.getBody().readAllBytes()));
+                      log.debug("4XXClientError occurred during createNewEmployee");;
+                      String errorMessage = new String(res.getBody().readAllBytes());
+                      log.error(errorMessage);
+
+                      throw new ResourceNotFound("could not create this employee due to"+errorMessage);
                   })
                     .body(new ParameterizedTypeReference<>() {
                     });
 
-
+            log.trace("successfully created an employee :{}",employeeDTOAPIResponse.getData());
             return employeeDTOAPIResponse.getData();
         }
         catch (Exception e){
+            log.error("exception occurred in createNewEmployee",e);
             throw new RuntimeException(e);
         }
     }
 
     @Override
     public Boolean deleteEmployeeById(Long empId) {
+        log.trace("trying to delete an employee in deleteEmployeeById with id:{}",empId);
         try {
             APIResponse<Boolean> employeeDTOAPIResponse = restClient
                     .delete()
@@ -112,12 +126,14 @@ public class EmployeeClientImpl implements EmployeeClient {
             return employeeDTOAPIResponse.getData();
         }
         catch (Exception e){
+            log.error("exception occurred in deleteEmployeeById", e);
             throw new RuntimeException(e);
         }
     }
 
     @Override
     public EmployeeDTO updateEmployeeUsingId(Long empId, EmployeeDTO updatedEmployee) {
+        log.trace("trying to update an employee in updateEmployeeUsingId with id:{}",empId);
         try {
             APIResponse<EmployeeDTO> employeeDTOAPIResponse = restClient
                     .put()
@@ -132,6 +148,7 @@ public class EmployeeClientImpl implements EmployeeClient {
             return employeeDTOAPIResponse.getData();
         }
         catch (Exception e){
+            log.error("exception occurred in updateEmployeeUsingId",e);
             throw new RuntimeException(e);
         }
     }
