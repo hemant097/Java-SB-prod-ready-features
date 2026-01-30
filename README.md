@@ -10,4 +10,4 @@
 
 #### 5. OpenAPI documentation, and swagger UI
 
-![SwaggerUI](https://github.com/hemant097/Java-SB-prod-ready-features/blob/src/main/java/com/example/week4/postapplication/Images/swagger-ui.jpg?raw=true)
+![SwaggerUI](https://github.com/hemant097/Java-SB-prod-ready-features/src/main/java/com/example/week4/postapplication/Images/swagger-ui.jpg?raw=true)
