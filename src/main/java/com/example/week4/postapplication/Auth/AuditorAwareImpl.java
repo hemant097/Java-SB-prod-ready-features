@@ -13,7 +13,7 @@ public class AuditorAwareImpl implements AuditorAware<String> {
         //get security context
         //get authentication
         //get principal
-        //get username, these steps will be added later
+        //get username, these steps will be added later, after learning spring security
         return Optional.of("Hemant Sharma");
     }
 }
